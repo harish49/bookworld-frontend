@@ -10,8 +10,8 @@ const bookAction = () => async (dispatch) => {
   try {
     dispatch({ type: BOOKS_REQUEST });
     const { data } = await axios.get(`${BASE_URL}/books/defaultbooks`);
-
-    dispatch({ type: BOOKS_REQUEST_SUCCESS, payload: data });
+    const responseData = data.responseData;
+    dispatch({ type: BOOKS_REQUEST_SUCCESS, payload: responseData });
   } catch (error) {
     let payloadToSend =
       error.response && error.response.data.message

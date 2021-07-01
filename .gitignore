@@ -9,6 +9,10 @@ node_modules/
 # testing
 /coverage
 
+#bootstrap
+bootstrap.min.css
+lux.min.css
+
 # production
 /build
 

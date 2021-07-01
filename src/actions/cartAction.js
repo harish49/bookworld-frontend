@@ -12,14 +12,15 @@ export const cartAddItem = (bookId, quantity) => async (dispatch, getState) => {
       `${BASE_URL}/books/defaultbooks/${bookId}`
     );
     console.log("Quantity is" + quantity);
+    const responseData = data.responseData;
     dispatch({
       type: CART_ADD_ITEM,
       payload: {
-        bookId: data.bookId,
-        bookTitle: data.title,
-        bookImageLink: data.thumbnail,
-        bookPrice: data.price,
-        booksInStock: data.availableCount,
+        bookId: responseData.bookId,
+        bookTitle: responseData.title,
+        bookImageLink: responseData.thumbnail,
+        bookPrice: responseData.price,
+        booksInStock: responseData.availableCount,
         quantity,
       },
     });

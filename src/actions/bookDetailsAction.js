@@ -14,8 +14,9 @@ const bookDetailsAction = (bookid) => async (dispatch) => {
     const { data } = await axios.get(
       `${BASE_URL}/books/defaultbooks/${bookid}`
     );
+    const responseData = data.responseData;
 
-    dispatch({ type: BOOKS_DETAILS_REQUEST_SUCCESS, payload: data });
+    dispatch({ type: BOOKS_DETAILS_REQUEST_SUCCESS, payload: responseData });
     console.log(data);
   } catch (error) {
     let payloadToSend =

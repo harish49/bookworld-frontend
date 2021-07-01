@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { bookListReducer, bookDetailsReducer } from "./reducers/bookReducer";
 import { cartReducer } from "./reducers/bookReducer";
-
+//Use telegram icon to post reviews
 let localStorageCartItems = localStorage.getItem("booksInCart")
   ? JSON.parse(localStorage.getItem("booksInCart"))
   : [];
