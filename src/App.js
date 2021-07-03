@@ -6,6 +6,8 @@ import BookDetails from "./components/BookDetails";
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Cart from "./components/Cart";
+import Loginpage from "./components/Loginpage";
+import Registerpage from "./components/Registerpage";
 const App = () => {
   return (
     <Router>
@@ -20,6 +22,8 @@ const App = () => {
 
           <Route path="/cart/:id?" component={withRouter(Cart)} exact />
           <Route path="/" component={withRouter(Home)} exact />
+          <Route path="/login" component={withRouter(Loginpage)} exact />
+          <Route path="/register" component={withRouter(Registerpage)} exact />
         </Container>
       </main>
       <Footer />

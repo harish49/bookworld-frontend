@@ -7,6 +7,13 @@ import {
   BOOKS_DETAILS_REQUEST_FAILED,
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_REQUEST_SUCCESS,
+  USER_LOGIN_REQUEST_FAILED,
+  USER_LOGOUT,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_REQUEST_SUCCESS,
+  USER_REGISTER_REQUEST_FAILED,
 } from "../Appconstants.js/bookconstants";
 
 export const bookListReducer = (state = { books: [] }, action) => {
@@ -71,6 +78,34 @@ export const cartReducer = (state = { booksInCart: [] }, action) => {
           (book) => book.bookId !== action.payload
         ),
       };
+    default:
+      return state;
+  }
+};
+
+export const userReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_LOGIN_REQUEST:
+      return { loading: true };
+    case USER_LOGIN_REQUEST_SUCCESS:
+      return { loading: false, userInformation: action.payload };
+    case USER_LOGIN_REQUEST_FAILED:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userRegisterReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_REGISTER_REQUEST:
+      return { loading: true };
+    case USER_REGISTER_REQUEST_SUCCESS:
+      return { loading: false, userInformation: action.payload };
+    case USER_REGISTER_REQUEST_FAILED:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
