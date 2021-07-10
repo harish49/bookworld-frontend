@@ -12,9 +12,11 @@ const Cart = (props) => {
 
   const dispatch = useDispatch();
   const cartReducer = useSelector((state) => state.userCart);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInformation } = userLogin;
   const { booksInCart } = cartReducer;
   useEffect(() => {
-    if (bookId) {
+    if (bookId && userInformation) {
       dispatch(cartAddItem(bookId, quantity));
     }
   }, [dispatch, bookId, quantity]);

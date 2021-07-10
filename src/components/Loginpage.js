@@ -17,8 +17,9 @@ const Loginpage = (props) => {
     e.preventDefault();
     if (username === "" || password === "") {
       setMessage("Please fill all the fields");
+    } else {
+      dispatch(login(username, password));
     }
-    dispatch(login(username, password));
   };
   const dispatch = useDispatch();
   const userLoginReducer = useSelector((state) => state.userLogin);
@@ -45,10 +46,10 @@ const Loginpage = (props) => {
               >
                 Login In
               </h5>
-              {message ? (
-                <Message variant="danger">{message}</Message>
-              ) : error ? (
+              {error != null ? (
                 <Message variant="danger">{error}</Message>
+              ) : message ? (
+                <Message variant="danger">{message}</Message>
               ) : (
                 ""
               )}

@@ -10,6 +10,8 @@ import bookDetailsAction from "../actions/bookDetailsAction";
 const BookDetails = (props) => {
   const dispatch = useDispatch();
   const bookInfoReducer = useSelector((state) => state.bookDetails);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInformation } = userLogin;
   const { loading, error, book } = bookInfoReducer;
   const [quantity, setQuantity] = useState(1);
   useEffect(() => {
@@ -18,18 +20,16 @@ const BookDetails = (props) => {
   }, [dispatch, props.match.params.id]);
 
   console.log(props.match.params.id);
-  let averageRating = 0;
-  let rating = 0;
-  const calculateRating = (reviews) => {
-    console.log(book);
-    reviews.forEach(
-      (review) => (averageRating = averageRating + review.rating)
-    );
-    rating = averageRating / reviews.length;
-  };
-
+  let rating = book.rating;
   const addToCart = () => {
-    props.history.push(`/cart/${props.match.params.id}?quantity=${quantity}`);
+    if (!userInformation) {
+      props.history.push("/login");
+    } else {
+      if (quantity > 0)
+        props.history.push(
+          `/cart/${props.match.params.id}?quantity=${quantity}`
+        );
+    }
   };
   return (
     <div className="container" style={{ paddingTop: 20 }}>
@@ -59,7 +59,6 @@ const BookDetails = (props) => {
                 <DescriptionModal matter={book.description} />
               </ListGroup.Item>
               <ListGroup.Item>
-                {calculateRating(book.reviews)}
                 {rating >= 1 ? (
                   <i
                     className="fa fa-star checked"
@@ -116,7 +115,7 @@ const BookDetails = (props) => {
       "
                   ></i>
                 )}
-                {book.reviews.length} reviews
+                {book.reviews} reviews
               </ListGroup.Item>
             </ListGroup>
           </Col>

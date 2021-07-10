@@ -2,6 +2,8 @@ import {
   CART_ADD_ITEM,
   BASE_URL,
   CART_REMOVE_ITEM,
+  SHIPPING_ADDRESS,
+  PAYMENT_METHOD,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
@@ -47,4 +49,19 @@ export const cartRemoveItem = (bookId) => async (dispatch, getState) => {
   } catch (error) {
     console.log(`Error occurred while fetching book ${error}`);
   }
+};
+
+export const ShippingAddress = (address) => async (dispatch) => {
+  dispatch({
+    type: SHIPPING_ADDRESS,
+    payload: address,
+  });
+  localStorage.setItem("shippingAddress", JSON.stringify(address));
+};
+export const PaymentMethod = (paymentMethod) => async (dispatch) => {
+  dispatch({
+    type: PAYMENT_METHOD,
+    payload: paymentMethod,
+  });
+  localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 };

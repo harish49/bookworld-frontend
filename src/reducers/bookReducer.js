@@ -14,6 +14,14 @@ import {
   USER_REGISTER_REQUEST,
   USER_REGISTER_REQUEST_SUCCESS,
   USER_REGISTER_REQUEST_FAILED,
+  USER_PROFILE_UPDATE_REQUEST,
+  USER_PROFILE_UPDATE_REQUEST_SUCCESS,
+  USER_PROFILE_UPDATE_REQUEST_FAILED,
+  SHIPPING_ADDRESS,
+  PAYMENT_METHOD,
+  ORDER_CREATE_SUCCESS,
+  ORDER_CREATE_REQUEST,
+  ORDER_CREATE_FAILED,
 } from "../Appconstants.js/bookconstants";
 
 export const bookListReducer = (state = { books: [] }, action) => {
@@ -45,7 +53,10 @@ export const bookDetailsReducer = (
   }
 };
 
-export const cartReducer = (state = { booksInCart: [] }, action) => {
+export const cartReducer = (
+  state = { booksInCart: [], shippingAddress: {} },
+  action
+) => {
   switch (action.type) {
     case CART_ADD_ITEM:
       let currentItem = action.payload;
@@ -78,6 +89,16 @@ export const cartReducer = (state = { booksInCart: [] }, action) => {
           (book) => book.bookId !== action.payload
         ),
       };
+    case SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
+    case PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: action.payload,
+      };
     default:
       return state;
   }
@@ -105,6 +126,32 @@ export const userRegisterReducer = (state = {}, action) => {
     case USER_REGISTER_REQUEST_SUCCESS:
       return { loading: false, userInformation: action.payload };
     case USER_REGISTER_REQUEST_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const updateProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_PROFILE_UPDATE_REQUEST:
+      return { loading: true };
+    case USER_PROFILE_UPDATE_REQUEST_SUCCESS:
+      return { loading: false, profileUpdated: action.payload };
+    case USER_PROFILE_UPDATE_REQUEST_FAILED:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const orderReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_CREATE_REQUEST:
+      return { loading: true };
+    case ORDER_CREATE_SUCCESS:
+      return { loading: false, success: true, order: action.payload };
+    case ORDER_CREATE_FAILED:
       return { loading: false, error: action.payload };
     default:
       return state;

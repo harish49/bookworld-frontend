@@ -3,11 +3,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "react-rater/lib/react-rater.css";
 const Book = ({ book }) => {
-  let averageRating = 0;
-  book.reviews.forEach(
-    (review) => (averageRating = averageRating + review.rating)
-  );
-  let rating = averageRating / book.reviews.length;
+  let rating = 4;
   return (
     <Card className="my-3 p-3 rounded shadow rounded" style={{ height: 450 }}>
       <Link to={`/books/defaultbooks/${book.bookId}`}>
@@ -26,7 +22,7 @@ const Book = ({ book }) => {
         </Link>
         <Card.Text as="div">
           <div className="my-1">
-            {rating >= 1 ? (
+            {book.rating >= 1 ? (
               <i
                 className="fa fa-star checked"
                 style={{ color: "#fc9403" }}
@@ -34,7 +30,7 @@ const Book = ({ book }) => {
             ) : (
               <i className="fa fa-star"></i>
             )}
-            {rating >= 2 ? (
+            {book.rating >= 2 ? (
               <i
                 className="fa fa-star
        checked"
@@ -46,7 +42,7 @@ const Book = ({ book }) => {
       "
               ></i>
             )}
-            {rating >= 3 ? (
+            {book.rating >= 3 ? (
               <i
                 className="fa fa-star
        checked"
@@ -58,7 +54,7 @@ const Book = ({ book }) => {
       "
               ></i>
             )}
-            {rating >= 4 ? (
+            {book.rating >= 4 ? (
               <i
                 className="fa fa-star
        checked"
@@ -70,7 +66,7 @@ const Book = ({ book }) => {
       "
               ></i>
             )}
-            {rating >= 5 ? (
+            {book.rating >= 5 ? (
               <i
                 className="fa fa-star
        checked"
@@ -82,7 +78,7 @@ const Book = ({ book }) => {
       "
               ></i>
             )}
-            {book.reviews.length} reviews
+            {book.reviews} reviews
           </div>
         </Card.Text>
         <Card.Text as="div">

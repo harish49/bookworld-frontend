@@ -7,6 +7,8 @@ import {
   cartReducer,
   userReducer,
   userRegisterReducer,
+  updateProfileReducer,
+  orderReducer,
 } from "./reducers/bookReducer";
 //Use telegram icon to post reviews
 let localStorageCartItems = localStorage.getItem("booksInCart")
@@ -15,16 +17,25 @@ let localStorageCartItems = localStorage.getItem("booksInCart")
 let localStorageUserInfo = localStorage.getItem("userInformation")
   ? JSON.parse(localStorage.getItem("userInformation"))
   : null;
+
+let localStorageShippingAddress = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : {};
 const reducer = combineReducers({
   bookList: bookListReducer,
   bookDetails: bookDetailsReducer,
   userCart: cartReducer,
   userLogin: userReducer,
   userRegister: userRegisterReducer,
+  updateProfile: updateProfileReducer,
+  createOrder: orderReducer,
 });
 
 const initialState = {
-  userCart: { booksInCart: localStorageCartItems },
+  userCart: {
+    booksInCart: localStorageCartItems,
+    shippingAddress: localStorageShippingAddress,
+  },
   userLogin: { userInformation: localStorageUserInfo },
 };
 

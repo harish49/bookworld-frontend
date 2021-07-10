@@ -8,6 +8,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Cart from "./components/Cart";
 import Loginpage from "./components/Loginpage";
 import Registerpage from "./components/Registerpage";
+import ProfileUpdate from "./components/ProfileUpdate";
+import Checkout from "./components/Checkout";
+import Payment from "./components/Payment";
+import Placeorder from "./components/Placeorder";
 const App = () => {
   return (
     <Router>
@@ -20,10 +24,14 @@ const App = () => {
             component={withRouter(BookDetails)}
           />
 
+          <Route path="/checkout" component={withRouter(Checkout)} exact />
+          <Route path="/placeorder" component={withRouter(Placeorder)} exact />
+          <Route path="/payment" component={withRouter(Payment)} exact />
           <Route path="/cart/:id?" component={withRouter(Cart)} exact />
           <Route path="/" component={withRouter(Home)} exact />
           <Route path="/login" component={withRouter(Loginpage)} exact />
           <Route path="/register" component={withRouter(Registerpage)} exact />
+          <Route path="/profile" component={withRouter(ProfileUpdate)} exact />
         </Container>
       </main>
       <Footer />
