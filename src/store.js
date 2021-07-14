@@ -9,6 +9,12 @@ import {
   userRegisterReducer,
   updateProfileReducer,
   orderReducer,
+  orderDetailsReducer,
+  userOrderReducer,
+  getAllUsersReducer,
+  removeUserReducer,
+  updateOrderReducer,
+  updateBookCount,
 } from "./reducers/bookReducer";
 //Use telegram icon to post reviews
 let localStorageCartItems = localStorage.getItem("booksInCart")
@@ -29,6 +35,12 @@ const reducer = combineReducers({
   userRegister: userRegisterReducer,
   updateProfile: updateProfileReducer,
   createOrder: orderReducer,
+  orderDetails: orderDetailsReducer,
+  userordersList: userOrderReducer,
+  getAllUsers: getAllUsersReducer,
+  removeUser: removeUserReducer,
+  updateOrder: updateOrderReducer,
+  updateBook: updateBookCount,
 });
 
 const initialState = {

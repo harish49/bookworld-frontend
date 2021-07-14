@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { PaymentMethod } from "../actions/cartAction";
+import { CREDITCARD, RAZORPAY } from "../Appconstants.js/bookconstants";
 const Payment = (props) => {
   let userCart = useSelector((state) => state.userCart);
   const { shippingAddress } = userCart;
@@ -36,17 +37,17 @@ const Payment = (props) => {
                 <Col>
                   <Form.Check
                     type="radio"
-                    label="Creditcard"
-                    id="creditcard"
-                    value="creditcard"
+                    label={CREDITCARD}
+                    id={CREDITCARD}
+                    value={CREDITCARD}
                     name="paymentMethod"
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   ></Form.Check>
                   <Form.Check
                     type="radio"
-                    label="Razorpay"
-                    id="Razorpay"
-                    value="Razorpay"
+                    label={RAZORPAY}
+                    id={RAZORPAY}
+                    value={RAZORPAY}
                     name="paymentMethod"
                     onChange={(e) => setPaymentMethod(e.target.value)}
                   ></Form.Check>

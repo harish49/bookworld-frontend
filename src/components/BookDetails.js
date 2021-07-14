@@ -31,6 +31,9 @@ const BookDetails = (props) => {
         );
     }
   };
+  const editAvailableCount = (bookId) => {
+    props.history.push(`/editbook/${bookId}`);
+  };
   return (
     <div className="container" style={{ paddingTop: 20 }}>
       {loading ? (
@@ -55,6 +58,22 @@ const BookDetails = (props) => {
               <ListGroup.Item>Author : {book.author}</ListGroup.Item>
               <ListGroup.Item>Category : {book.categories}</ListGroup.Item>
               <ListGroup.Item>PageCount : {book.pageCount}</ListGroup.Item>
+              {userInformation && userInformation.userName === "admin" ? (
+                <ListGroup.Item>
+                  In stock : {book.availableCount}{" "}
+                  <Button
+                    type="button"
+                    variant="warning"
+                    onClick={() => editAvailableCount(book.bookId)}
+                    className="shadow rounded btn-sm"
+                  >
+                    <i className="fas fa-edit"></i>
+                  </Button>
+                </ListGroup.Item>
+              ) : (
+                ""
+              )}
+
               <ListGroup.Item style={{ textAlign: "center" }}>
                 <DescriptionModal matter={book.description} />
               </ListGroup.Item>

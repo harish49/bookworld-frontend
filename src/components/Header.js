@@ -19,7 +19,7 @@ const Header = () => {
       <Navbar className="py-3" bg="dark" variant="dark">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Project</Navbar.Brand>
+            <Navbar.Brand>Book e-commerce</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -32,10 +32,27 @@ const Header = () => {
               {userInformation ? (
                 <NavDropdown title={userInformation.userName} id="userName">
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>profile</NavDropdown.Item>
+                    <NavDropdown.Item>Update Profile</NavDropdown.Item>
                   </LinkContainer>
+                  <LinkContainer to="/Myorders">
+                    <NavDropdown.Item>My orders</NavDropdown.Item>
+                  </LinkContainer>
+                  {userInformation.userName === "admin" ? (
+                    <LinkContainer to="/users">
+                      <NavDropdown.Item>Users</NavDropdown.Item>
+                    </LinkContainer>
+                  ) : (
+                    ""
+                  )}
+                  {userInformation.userName === "admin" ? (
+                    <LinkContainer to="/books">
+                      <NavDropdown.Item>Books</NavDropdown.Item>
+                    </LinkContainer>
+                  ) : (
+                    ""
+                  )}
                   <NavDropdown.Item onClick={userLogout}>
-                    logout
+                    Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (

@@ -1,7 +1,7 @@
 import React from "react";
 import FadeLoader from "react-spinners/FadeLoader";
 
-const DataLoader = () => {
+const DataLoader = (props) => {
   return (
     <div
       style={{
@@ -19,10 +19,13 @@ const DataLoader = () => {
         radius={2}
         margin={2}
       />
-      <span style={{ display: "block" }}>
-        <h3>Fetching data...</h3>
-      </span>
+      {/* <span style={{ display: "block" }}>
+        <h3>{props.message}</h3>
+      </span> */}
     </div>
   );
+};
+DataLoader.defaultProps = {
+  message: "Fetching...",
 };
 export default DataLoader;

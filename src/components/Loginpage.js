@@ -19,6 +19,9 @@ const Loginpage = (props) => {
       setMessage("Please fill all the fields");
     } else {
       dispatch(login(username, password));
+      setUserName("");
+      setPassword("");
+      setMessage("");
     }
   };
   const dispatch = useDispatch();
@@ -44,7 +47,7 @@ const Loginpage = (props) => {
                   paddingBottom: 30,
                 }}
               >
-                Login In
+                Sign In
               </h5>
               {error != null ? (
                 <Message variant="danger">{error}</Message>
@@ -93,7 +96,7 @@ const Loginpage = (props) => {
                       redirect ? `register?redirect=${redirect}` : `/register`
                     }
                   >
-                    Register
+                    Sign Up
                   </Link>
                 </Col>
               </Row>

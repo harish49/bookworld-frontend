@@ -31,7 +31,11 @@ const Cart = (props) => {
   };
 
   const checkOut = () => {
-    props.history.push("/login?redirect=checkout");
+    if (userInformation) {
+      props.history.push("/checkout");
+    } else {
+      props.history.push("/login");
+    }
   };
   return (
     <div className="container" style={{ margin: "auto", display: "block" }}>

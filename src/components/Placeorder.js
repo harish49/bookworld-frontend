@@ -1,7 +1,9 @@
 import React from "react";
-import { useEffect } from "react";
+import { useState } from "react";
+import { Form } from "react-bootstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 import { CART, PROCESSING } from "../Appconstants.js/bookconstants";
-import { Button, Row, Col, ListGroup, Card } from "react-bootstrap";
+import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { orderAction } from "../actions/orderAction";
 import Message from "./Message";
@@ -14,17 +16,17 @@ const Placeorder = (props) => {
   const { userInformation } = userLogin;
   const { order, success, error } = createOrder;
 
+  let [CVV, setCVV] = useState("");
+  let [cardNumber, setCardNumber] = useState("");
+  let [expirationMonth, setExpirationMonth] = useState("");
+  let [expirationYear, setExpirationYear] = useState("");
+  let [showAlert, setShowAlert] = useState(true);
+  let [formSubmitted, setFormSubmitted] = useState(false);
   let totalPrice = 0;
 
   booksInCart.forEach((book) => {
     totalPrice += book.quantity * book.bookPrice;
   });
-  useEffect(() => {
-    if (success) {
-      props.history.push(`/order/${order.id}`);
-    }
-    // eslint-disable-next-line
-  }, [props.history, success]);
   const getOrderItems = () => {
     let items = [];
     booksInCart.forEach((book) => {
@@ -35,8 +37,15 @@ const Placeorder = (props) => {
     });
     return items;
   };
+  const clearFields = () => {
+    setCVV("");
+    setCardNumber("");
+    setExpirationMonth("");
+    setExpirationYear("");
+  };
   const dispatch = useDispatch();
-  const dispatchOrderAction = () => {
+  const formsubmitHandler = (e) => {
+    e.preventDefault();
     dispatch(
       orderAction({
         username: userInformation.userName,
@@ -51,66 +60,171 @@ const Placeorder = (props) => {
         orderItems: getOrderItems(),
       })
     );
+    setFormSubmitted(true);
   };
+  let updateShowAlert = () => {
+    console.log("Hello updateShowAlert");
+    setShowAlert(false);
+  };
+  let redirectToCart = () => {
+    props.history.push("/cart");
+  };
+  console.log(showAlert);
   return (
     <div>
-      <Row>
-        <Col md={8}>
+      <Row className="justify-content-md-center" style={{ paddingTop: 20 }}>
+        <Col md={6}>
+          <h5
+            style={{
+              textAlign: "center",
+              paddingTop: 40,
+              paddingBottom: 30,
+            }}
+          >
+            Order Summary <i className="fa fa-list-alt" aria-hidden="true"></i>
+          </h5>
           <ListGroup>
             <ListGroup.Item>
-              <h4>Shipping Address</h4>
-              {
-                <p>
+              <Row>
+                <Col>
+                  Shipping Address{" "}
+                  <i
+                    className="fa fa-map-marker"
+                    style={{ color: "Tomato" }}
+                  ></i>
+                </Col>
+                <Col>
                   {usercart.shippingAddress.houseNumber},
                   {usercart.shippingAddress.locality},
                   {usercart.shippingAddress.pincode},
                   {usercart.shippingAddress.country}
-                </p>
-              }
+                </Col>
+              </Row>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h4>Payment Method</h4>
-              <h3>{usercart.paymentMethod}</h3>
+              <Row>
+                <Col>Books Price</Col>
+                <Col>₹{totalPrice}</Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col>Delivery charges</Col>
+                <Col>₹100</Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col>Total</Col>
+                <Col>₹{totalPrice + 100}</Col>
+              </Row>
             </ListGroup.Item>
           </ListGroup>
-
-          <Card>
-            <ListGroup>
-              <ListGroup.Item>
-                <h2>Order Summary</h2>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Books Price</Col>
-                  <Col>₹{totalPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Delivery charges</Col>
-                  <Col>₹100</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {error && <Message variant="danger">{error}</Message>}
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Total Price</Col>
-                  <Col>₹{totalPrice + 100}</Col>
-                </Row>
-                <Button
-                  type="button"
-                  variant="dark"
-                  className="shadow rounded"
-                  disabled={usercart.length === 0}
-                  onClick={() => dispatchOrderAction()}
-                >
-                  Place Order
-                </Button>
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
+        </Col>
+        <Col xs={12} md={6} lg={4} className="shadow rounded">
+          <h5
+            style={{
+              textAlign: "center",
+              paddingTop: 40,
+              paddingBottom: 30,
+            }}
+          >
+            Payment
+          </h5>
+          <Form onSubmit={formsubmitHandler}>
+            <Form.Group controlId="CardNumber">
+              <Form.Control
+                type="text"
+                placeholder="card number"
+                value={cardNumber}
+                required
+                onChange={(e) => setCardNumber(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId="CVV">
+              <Form.Control
+                type="password"
+                placeholder="CVV"
+                value={CVV}
+                required
+                onChange={(e) => setCVV(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Row>
+              <Col>
+                <Form.Group controlId="expirationMonth">
+                  <Form.Control
+                    type="number"
+                    placeholder="MM"
+                    value={expirationMonth}
+                    required
+                    onChange={(e) => setExpirationMonth(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="expirationYear">
+                  <Form.Control
+                    type="number"
+                    placeholder="YY"
+                    value={expirationYear}
+                    required
+                    onChange={(e) => setExpirationYear(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
+            <br></br>
+            <br></br>
+            <br></br>
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {success && (
+              <Message variant="success">
+                Order placed Successfully at {order.createdTs}
+              </Message>
+            )}
+            {success && showAlert && formSubmitted && (
+              <SweetAlert
+                success
+                title="Thanks for shopping...Order Placed Successfully!"
+                onConfirm={() => {
+                  updateShowAlert();
+                  clearFields();
+                  redirectToCart();
+                }}
+                btnSize="sm"
+              >
+                Your order id {order.id}
+              </SweetAlert>
+            )}
+            {error && showAlert && formSubmitted && (
+              <SweetAlert
+                error
+                title="Failed to place order!"
+                onConfirm={() => {
+                  updateShowAlert();
+                  clearFields();
+                  redirectToCart();
+                }}
+                btnSize="sm"
+              >
+                Please try again
+              </SweetAlert>
+            )}
+            <Button
+              type="submit"
+              variant="dark"
+              className="shadow rounded w-50"
+            >
+              Place Order
+            </Button>
+            <br></br>
+            <br></br>
+            <br></br>
+          </Form>
         </Col>
       </Row>
     </div>

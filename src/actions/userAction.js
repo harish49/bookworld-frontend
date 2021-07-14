@@ -10,6 +10,12 @@ import {
   USER_PROFILE_UPDATE_REQUEST_FAILED,
   USER_PROFILE_UPDATE_REQUEST,
   USER_PROFILE_UPDATE_REQUEST_SUCCESS,
+  GET_ALL_USERS_REQUEST,
+  GET_ALL_USERS_REQUEST_SUCCESS,
+  GET_ALL_USERS_REQUEST_FAILED,
+  REMOVE_USER_REQUEST,
+  REMOVE_USER_REQUEST_SUCCESS,
+  REMOVE_USER_REQUEST_FAILED,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
@@ -176,3 +182,67 @@ export const profile =
       });
     }
   };
+
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_ALL_USERS_REQUEST,
+    });
+    const { data } = await axios.get(`${BASE_URL}/users/all`);
+    const { error, statusCode, responseData } = data;
+    console.log(error, statusCode, responseData);
+    if (error) {
+      dispatch({
+        type: GET_ALL_USERS_REQUEST_FAILED,
+        payload: error,
+      });
+    } else {
+      dispatch({
+        type: GET_ALL_USERS_REQUEST_SUCCESS,
+        payload: responseData,
+      });
+    }
+  } catch (error) {
+    console.log(`Error occurred ${error}`);
+    let payloadToSend =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: GET_ALL_USERS_REQUEST_FAILED,
+      payload: payloadToSend,
+    });
+  }
+};
+export const removeUser = (username) => async (dispatch) => {
+  try {
+    dispatch({
+      type: REMOVE_USER_REQUEST,
+    });
+    const { data } = await axios.delete(`${BASE_URL}/users/remove/${username}`);
+    const { error, statusCode, responseData } = data;
+    console.log(error, statusCode, responseData);
+
+    if (error) {
+      dispatch({
+        type: REMOVE_USER_REQUEST_FAILED,
+        payload: error,
+      });
+    } else {
+      dispatch({
+        type: REMOVE_USER_REQUEST_SUCCESS,
+        payload: responseData,
+      });
+    }
+  } catch (error) {
+    console.log(`Error occurred ${error}`);
+    let payloadToSend =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: REMOVE_USER_REQUEST_FAILED,
+      payload: payloadToSend,
+    });
+  }
+};
