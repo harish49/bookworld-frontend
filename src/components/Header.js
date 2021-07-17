@@ -1,5 +1,16 @@
 import React from "react";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import {
+  Navbar,
+  Nav,
+  Container,
+  NavDropdown,
+  Form,
+  Row,
+  Col,
+  FormControl,
+  Button,
+} from "react-bootstrap";
+import Search from "./Search";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userAction";
@@ -15,14 +26,20 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar className="py-3" bg="dark" variant="dark">
+    <>
+      <Navbar
+        className="py-3"
+        variant="dark"
+        style={{ backgroundColor: "#17202A" }}
+        collapseOnSelect
+      >
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>Book e-commerce</Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Search />
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
@@ -37,16 +54,9 @@ const Header = () => {
                   <LinkContainer to="/Myorders">
                     <NavDropdown.Item>My orders</NavDropdown.Item>
                   </LinkContainer>
-                  {userInformation.userName === "admin" ? (
+                  {userInformation.role === "admin" ? (
                     <LinkContainer to="/users">
                       <NavDropdown.Item>Users</NavDropdown.Item>
-                    </LinkContainer>
-                  ) : (
-                    ""
-                  )}
-                  {userInformation.userName === "admin" ? (
-                    <LinkContainer to="/books">
-                      <NavDropdown.Item>Books</NavDropdown.Item>
                     </LinkContainer>
                   ) : (
                     ""
@@ -66,7 +76,7 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </header>
+    </>
   );
 };
 

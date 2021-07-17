@@ -15,6 +15,9 @@ import {
   removeUserReducer,
   updateOrderReducer,
   updateBookCount,
+  createReviewReducer,
+  getAllReviewsReducer,
+  googleBookListReducer,
 } from "./reducers/bookReducer";
 //Use telegram icon to post reviews
 let localStorageCartItems = localStorage.getItem("booksInCart")
@@ -41,6 +44,9 @@ const reducer = combineReducers({
   removeUser: removeUserReducer,
   updateOrder: updateOrderReducer,
   updateBook: updateBookCount,
+  writeReview: createReviewReducer,
+  allReviews: getAllReviewsReducer,
+  googleBooks: googleBookListReducer,
 });
 
 const initialState = {

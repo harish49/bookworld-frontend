@@ -97,7 +97,7 @@ const Edituser = (props) => {
               }}
               btnSize="sm"
             >
-              Your order id {orderUpdated.id}
+              {orderUpdated}
             </SweetAlert>
           )}
           {orderUpdateError && showAlert && (

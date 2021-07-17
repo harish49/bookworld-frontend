@@ -4,6 +4,7 @@ import {
   CART_REMOVE_ITEM,
   SHIPPING_ADDRESS,
   PAYMENT_METHOD,
+  REFRESH_CART,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
@@ -46,6 +47,16 @@ export const cartRemoveItem = (bookId) => async (dispatch, getState) => {
       "booksInCart",
       JSON.stringify(getState().userCart.booksInCart)
     );
+  } catch (error) {
+    console.log(`Error occurred while fetching book ${error}`);
+  }
+};
+
+export const refreshCart = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: REFRESH_CART,
+    });
   } catch (error) {
     console.log(`Error occurred while fetching book ${error}`);
   }

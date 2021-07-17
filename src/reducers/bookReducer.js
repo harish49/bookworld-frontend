@@ -39,6 +39,16 @@ import {
   UPDATE_BOOK_COUNT_REQUEST,
   UPDATE_BOOK_COUNT_REQUEST_SUCCESS,
   UPDATE_BOOK_COUNT_REQUEST_FAILED,
+  REFRESH_CART,
+  CREATE_REVIEW_REQUEST,
+  CREATE_REVIEW_REQUEST_SUCCESS,
+  GET_ALL_REVIEWS_REQUEST,
+  GET_ALL_REVIEWS_REQUEST_FAILED,
+  CREATE_REVIEW_REQUEST_FAILED,
+  GET_ALL_REVIEWS_REQUEST_SUCCESS,
+  GET_BOOKS_FROM_GOOGLE_REQUEST,
+  GET_BOOKS_FROM_GOOGLE_REQUEST_SUCCESS,
+  GET_BOOKS_FROM_GOOGLE_REQUEST_FAILED,
 } from "../Appconstants.js/bookconstants";
 
 export const bookListReducer = (state = { books: [] }, action) => {
@@ -49,6 +59,19 @@ export const bookListReducer = (state = { books: [] }, action) => {
       return { loading: false, books: action.payload };
     case BOOKS_REQUEST_FAILED:
       return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const googleBookListReducer = (state = { googleBooks: [] }, action) => {
+  switch (action.type) {
+    case GET_BOOKS_FROM_GOOGLE_REQUEST:
+      return { searching: true, googleBooks: [] };
+    case GET_BOOKS_FROM_GOOGLE_REQUEST_SUCCESS:
+      return { searching: false, googleBooks: action.payload };
+    case GET_BOOKS_FROM_GOOGLE_REQUEST_FAILED:
+      return { searching: false, googleBooksError: action.payload };
     default:
       return state;
   }
@@ -115,6 +138,11 @@ export const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      };
+    case REFRESH_CART:
+      return {
+        booksInCart: [],
+        shippingAddress: {},
       };
     default:
       return state;
@@ -274,6 +302,48 @@ export const updateBookCount = (state = {}, action) => {
         loading: false,
         updateBookError: action.payload,
         updateBook: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const createReviewReducer = (state = { createReview: {} }, action) => {
+  switch (action.type) {
+    case CREATE_REVIEW_REQUEST:
+      return { loading: true };
+    case CREATE_REVIEW_REQUEST_SUCCESS:
+      return {
+        loading: false,
+        createReview: action.payload,
+        createReviewError: null,
+      };
+    case CREATE_REVIEW_REQUEST_FAILED:
+      return {
+        loading: false,
+        createReviewError: action.payload,
+        createReview: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const getAllReviewsReducer = (state = { bookReviews: {} }, action) => {
+  switch (action.type) {
+    case GET_ALL_REVIEWS_REQUEST:
+      return { loading: true };
+    case GET_ALL_REVIEWS_REQUEST_SUCCESS:
+      return {
+        loading: false,
+        bookReviews: action.payload,
+        reviewsError: null,
+      };
+    case GET_ALL_REVIEWS_REQUEST_FAILED:
+      return {
+        loading: false,
+        reviewsError: action.payload,
+        bookReviews: null,
       };
     default:
       return state;

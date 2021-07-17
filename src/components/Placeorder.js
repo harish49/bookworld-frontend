@@ -2,10 +2,11 @@ import React from "react";
 import { useState } from "react";
 import { Form } from "react-bootstrap";
 import SweetAlert from "react-bootstrap-sweetalert";
-import { CART, PROCESSING } from "../Appconstants.js/bookconstants";
+import { CART, CREDITCARD, SUCCESS } from "../Appconstants.js/bookconstants";
 import { Button, Row, Col, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { orderAction } from "../actions/orderAction";
+import { refreshCart } from "../actions/cartAction";
 import Message from "./Message";
 const Placeorder = (props) => {
   const usercart = useSelector((state) => state.userCart);
@@ -54,12 +55,13 @@ const Placeorder = (props) => {
         payment: {
           price: totalPrice,
           deliveryCharges: 100,
-          paymentStatus: PROCESSING,
-          paymentMode: usercart.paymentMethod,
+          paymentStatus: SUCCESS,
+          paymentMode: CREDITCARD,
         },
         orderItems: getOrderItems(),
       })
     );
+    dispatch(refreshCart());
     setFormSubmitted(true);
   };
   let updateShowAlert = () => {
@@ -67,7 +69,7 @@ const Placeorder = (props) => {
     setShowAlert(false);
   };
   let redirectToCart = () => {
-    props.history.push("/cart");
+    props.history.push("/");
   };
   console.log(showAlert);
   return (
@@ -183,7 +185,7 @@ const Placeorder = (props) => {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {success && (
               <Message variant="success">
-                Order placed Successfully at {order.createdTs}
+                Order placed Successfully at {order.createdAt}
               </Message>
             )}
             {success && showAlert && formSubmitted && (
