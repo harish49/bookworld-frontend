@@ -35,7 +35,7 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Book e-commerce</Navbar.Brand>
+            <Navbar.Brand>BookWorld</Navbar.Brand>
           </LinkContainer>
           <Search />
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

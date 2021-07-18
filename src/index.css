@@ -1,3 +1,57 @@
 main {
   min-height: 80vh;
 }
+.form-simple .font-small {
+  font-size: 0.8rem;
+}
+
+.form-simple .header {
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+.form-simple input[type="text"]:focus:not([readonly]) {
+  border-bottom: 1px solid #ff3547;
+  -webkit-box-shadow: 0 1px 0 0 #ff3547;
+  box-shadow: 0 1px 0 0 #ff3547;
+}
+
+.form-simple input[type="text"]:focus:not([readonly]) + label {
+  color: #4f4f4f;
+}
+
+.form-simple input[type="password"]:focus:not([readonly]) {
+  border-bottom: 1px solid #ff3547;
+  -webkit-box-shadow: 0 1px 0 0 #ff3547;
+  box-shadow: 0 1px 0 0 #ff3547;
+}
+
+.form-simple input[type="password"]:focus:not([readonly]) + label {
+  color: #4f4f4f;
+}
+
+.paginationButtons {
+  width: 80%;
+  height: 40px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.paginationButtons a {
+  padding: 10px;
+  margin: 8px;
+  border-radius: 5px;
+  border: 1px solid #032449;
+  color: #032449;
+  cursor: pointer;
+}
+.paginationButtons a:hover {
+  color: white;
+  background-color: #032449;
+  transition: 0.1s;
+}
+
+.pageActive {
+  color: #f74620;
+}
