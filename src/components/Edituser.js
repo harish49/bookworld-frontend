@@ -6,12 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateOrder } from "../actions/orderAction";
 import DataLoader from "./DataLoader";
 import SweetAlert from "react-bootstrap-sweetalert";
+import {
+  CANCELLED,
+  CART,
+  DELIVERED,
+  SHIPPED,
+} from "../Appconstants.js/bookconstants";
 const Edituser = (props) => {
   let userToBeEdited = props.match.params.id;
   const [orderId, setOrderId] = useState("");
   const [orderStatus, setOrderStatus] = useState("");
   const [message, setMessage] = useState("");
   const orderUpdateReducer = useSelector((state) => state.updateOrder);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInformation } = userLogin;
   let { loading, orderUpdateError, orderUpdated } = orderUpdateReducer;
   let [showAlert, setShowAlert] = useState(false);
 
@@ -35,6 +43,8 @@ const Edituser = (props) => {
     <div>
       {loading ? (
         <DataLoader />
+      ) : !userInformation ? (
+        <Message variant="danger">Please login</Message>
       ) : (
         <Container style={{ paddingTop: 25 }}>
           <Row className="justify-content-md-center">
@@ -67,11 +77,17 @@ const Edituser = (props) => {
                 <br></br>
                 <Form.Group controlId="orderstatus">
                   <Form.Control
-                    type="text"
+                    as="select"
                     placeholder="order status"
                     value={orderStatus}
                     onChange={(e) => setOrderStatus(e.target.value)}
-                  ></Form.Control>
+                  >
+                    <option value="">Update Status</option>
+                    <option value="CART">{CART}</option>
+                    <option value="SHIPPED">{SHIPPED}</option>
+                    <option value="DELIVERED">{DELIVERED}</option>
+                    <option value="CANCELLED">{CANCELLED}</option>
+                  </Form.Control>
                 </Form.Group>
                 <br></br>
                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;

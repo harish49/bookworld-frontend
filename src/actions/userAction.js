@@ -44,10 +44,7 @@ export const login = (username, password) => async (dispatch) => {
           password: password,
         })
         .then((response) => {
-          localStorage.setItem(
-            "jwtToken",
-            JSON.stringify(response.data.responseData.token)
-          );
+          localStorage.setItem("jwtToken", response.data.responseData.token);
         })
         .catch((error) => {
           console.log(error);
@@ -151,9 +148,16 @@ export const profile =
         firstName: firstname,
         lastName: lastname,
       };
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      };
       const { data } = await axios.put(
         `${BASE_URL}/users/updateprofile`,
-        updateDetails
+        updateDetails,
+        config
       );
       const { error, statusCode, responseData } = data;
       console.log(error, statusCode, responseData);
@@ -172,14 +176,21 @@ export const profile =
       }
     } catch (error) {
       console.log(`Error occurred ${error}`);
-      let payloadToSend =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message;
-      dispatch({
-        type: USER_PROFILE_UPDATE_REQUEST_FAILED,
-        payload: payloadToSend,
-      });
+      if (error.response && error.response.status === 403) {
+        localStorage.clear();
+        dispatch({
+          type: USER_LOGOUT,
+        });
+      } else {
+        let payloadToSend =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({
+          type: USER_PROFILE_UPDATE_REQUEST_FAILED,
+          payload: payloadToSend,
+        });
+      }
     }
   };
 
@@ -188,7 +199,13 @@ export const getAllUsers = () => async (dispatch) => {
     dispatch({
       type: GET_ALL_USERS_REQUEST,
     });
-    const { data } = await axios.get(`${BASE_URL}/users/all`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.get(`${BASE_URL}/users/all`, config);
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
     if (error) {
@@ -204,14 +221,21 @@ export const getAllUsers = () => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: GET_ALL_USERS_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: GET_ALL_USERS_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 export const removeUser = (username) => async (dispatch) => {
@@ -219,7 +243,16 @@ export const removeUser = (username) => async (dispatch) => {
     dispatch({
       type: REMOVE_USER_REQUEST,
     });
-    const { data } = await axios.delete(`${BASE_URL}/users/remove/${username}`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.delete(
+      `${BASE_URL}/users/remove/${username}`,
+      config
+    );
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
 
@@ -236,13 +269,20 @@ export const removeUser = (username) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: REMOVE_USER_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: REMOVE_USER_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };

@@ -30,7 +30,7 @@ const Search = () => {
           className="rounded"
           style={{ height: 41 }}
         >
-          <i class="fas fa-search" style={{ color: "black" }}></i>
+          <i className="fas fa-search" style={{ color: "black" }}></i>
         </Button>
       </Form>
     </>

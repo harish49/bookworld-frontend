@@ -15,24 +15,40 @@ import {
   GET_BOOKS_FROM_GOOGLE_REQUEST,
   GET_BOOKS_FROM_GOOGLE_REQUEST_FAILED,
   GET_BOOKS_FROM_GOOGLE_REQUEST_SUCCESS,
+  USER_LOGOUT,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
-const bookAction = () => async (dispatch) => {
+export const bookAction = () => async (dispatch) => {
   try {
     dispatch({ type: BOOKS_REQUEST });
-    const { data } = await axios.get(`${BASE_URL}/books/defaultbooks`);
-    const responseData = data.responseData;
-    dispatch({ type: BOOKS_REQUEST_SUCCESS, payload: responseData });
+    const { data } = await axios.get(`${BASE_URL}/books/all`);
+    const { error, statusCode, responseData } = data;
+    console.log(error, statusCode, responseData);
+    if (error) {
+      dispatch({
+        type: BOOKS_REQUEST_FAILED,
+        payload: error,
+      });
+    } else {
+      dispatch({ type: BOOKS_REQUEST_SUCCESS, payload: responseData });
+    }
   } catch (error) {
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: BOOKS_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: BOOKS_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -41,8 +57,15 @@ export const googleBookAction = (searchItem) => async (dispatch) => {
     dispatch({
       type: GET_BOOKS_FROM_GOOGLE_REQUEST,
     });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
     const { data } = await axios.get(
-      `${BASE_URL}/books/googlebooks/${searchItem}`
+      `${BASE_URL}/books/googlebooks/${searchItem}`,
+      config
     );
     const { error, responseData, statusCode } = data;
     console.log(error, responseData, statusCode);
@@ -59,18 +82,24 @@ export const googleBookAction = (searchItem) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: GET_BOOKS_FROM_GOOGLE_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: GET_BOOKS_FROM_GOOGLE_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
-export default bookAction;
 export const updateBookAvailableCount = (bookId, count) => async (dispatch) => {
   try {
     dispatch({
@@ -80,9 +109,16 @@ export const updateBookAvailableCount = (bookId, count) => async (dispatch) => {
       bookId: bookId,
       count: count,
     };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
     const { data } = await axios.put(
       `${BASE_URL}/books/updatebook`,
-      requestBody
+      requestBody,
+      config
     );
     const { error, responseData, statusCode } = data;
     console.log(error, responseData, statusCode);
@@ -99,14 +135,21 @@ export const updateBookAvailableCount = (bookId, count) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: UPDATE_BOOK_COUNT_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: UPDATE_BOOK_COUNT_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -115,7 +158,17 @@ export const bookReview = (review) => async (dispatch) => {
     dispatch({
       type: CREATE_REVIEW_REQUEST,
     });
-    const { data } = await axios.post(`${BASE_URL}/books/review`, review);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.post(
+      `${BASE_URL}/books/review`,
+      review,
+      config
+    );
     const { error, responseData, statusCode } = data;
     console.log(error, responseData, statusCode);
     if (error) {
@@ -131,14 +184,21 @@ export const bookReview = (review) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: CREATE_REVIEW_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: CREATE_REVIEW_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -163,13 +223,20 @@ export const getAllReviews = (bookId) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: GET_ALL_REVIEWS_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: GET_ALL_REVIEWS_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };

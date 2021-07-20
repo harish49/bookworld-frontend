@@ -12,6 +12,7 @@ import {
   UPDATE_ORDER_REQUEST,
   UPDATE_ORDER_REQUEST_FAILED,
   UPDATE_ORDER_REQUEST_SUCCESS,
+  USER_LOGOUT,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
@@ -20,8 +21,17 @@ export const orderAction = (order) => async (dispatch) => {
     dispatch({
       type: ORDER_CREATE_REQUEST,
     });
-
-    const { data } = await axios.post(`${BASE_URL}/users/placeorder`, order);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.post(
+      `${BASE_URL}/users/placeorder`,
+      order,
+      config
+    );
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
     if (error) {
@@ -40,14 +50,21 @@ export const orderAction = (order) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ORDER_CREATE_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: ORDER_CREATE_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -56,8 +73,16 @@ export const orderDetails = (orderId) => async (dispatch) => {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
     });
-
-    const { data } = await axios.get(`${BASE_URL}/users/order/${orderId}`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${BASE_URL}/users/order/${orderId}`,
+      config
+    );
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
     if (error) {
@@ -73,14 +98,21 @@ export const orderDetails = (orderId) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ORDER_DETAILS_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: ORDER_DETAILS_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -89,8 +121,16 @@ export const userOrdersAction = (username) => async (dispatch) => {
     dispatch({
       type: USER_ORDERS_REQUEST,
     });
-
-    const { data } = await axios.get(`${BASE_URL}/users/orders/${username}`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.get(
+      `${BASE_URL}/users/orders/${username}`,
+      config
+    );
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
     if (error) {
@@ -106,14 +146,21 @@ export const userOrdersAction = (username) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: ORDER_DETAILS_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: ORDER_DETAILS_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };
 
@@ -127,7 +174,17 @@ export const updateOrder = (userName, orderId, status) => async (dispatch) => {
       id: orderId,
       orderstatus: status,
     };
-    const { data } = await axios.put(`${BASE_URL}/users/orders`, requestBody);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    };
+    const { data } = await axios.put(
+      `${BASE_URL}/users/orders`,
+      requestBody,
+      config
+    );
 
     const { error, statusCode, responseData } = data;
     console.log(error, statusCode, responseData);
@@ -144,13 +201,20 @@ export const updateOrder = (userName, orderId, status) => async (dispatch) => {
     }
   } catch (error) {
     console.log(`Error occurred ${error}`);
-    let payloadToSend =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({
-      type: UPDATE_ORDER_REQUEST_FAILED,
-      payload: payloadToSend,
-    });
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      let payloadToSend =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({
+        type: UPDATE_ORDER_REQUEST_FAILED,
+        payload: payloadToSend,
+      });
+    }
   }
 };

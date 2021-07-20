@@ -5,14 +5,22 @@ import {
   SHIPPING_ADDRESS,
   PAYMENT_METHOD,
   REFRESH_CART,
+  USER_LOGOUT,
 } from "../Appconstants.js/bookconstants";
 
 const axios = require("axios");
 
 export const cartAddItem = (bookId, quantity) => async (dispatch, getState) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+    },
+  };
   try {
     const { data } = await axios.get(
-      `${BASE_URL}/books/defaultbooks/${bookId}`
+      `${BASE_URL}/books/getbook/${bookId}`,
+      config
     );
     console.log("Quantity is" + quantity);
     const responseData = data.responseData;
@@ -33,7 +41,14 @@ export const cartAddItem = (bookId, quantity) => async (dispatch, getState) => {
       JSON.stringify(getState().userCart.booksInCart)
     );
   } catch (error) {
-    console.log(`Error occurred while fetching book ${error}`);
+    if (error.response && error.response.status === 403) {
+      localStorage.clear();
+      dispatch({
+        type: USER_LOGOUT,
+      });
+    } else {
+      console.log(`Error occurred while fetching book ${error}`);
+    }
   }
 };
 

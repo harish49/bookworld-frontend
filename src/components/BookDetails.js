@@ -52,7 +52,7 @@ const BookDetails = (props) => {
   };
   console.log(props.match.params.id);
   let rating = 0;
-  if (book) rating = book.rating;
+  if (book) rating = book.rating / book.reviews;
   const addToCart = () => {
     if (!userInformation) {
       props.history.push("/login");

@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import Book from "./Book";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import bookAction from "../actions/bookAction";
+import { bookAction } from "../actions/bookAction";
 import DataLoader from "./DataLoader";
 import Message from "./Message";
 import Reactpaginate from "react-paginate";
@@ -18,7 +18,8 @@ const Home = () => {
     dispatch(bookAction());
   }, [dispatch]);
 
-  let resultantBooks = [...googleBooks, ...books];
+  let resultantBooks = [];
+  if (books && googleBooks) resultantBooks = [...googleBooks, ...books];
 
   let noOfBooksPerPage = 8;
   const [pageNumber, setPageNumber] = useState(0);
@@ -52,7 +53,7 @@ const Home = () => {
           <br></br>
           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-          <Row style={{ "justify-content": "center" }}>
+          <Row style={{ justifyContent: "center" }}>
             <Reactpaginate
               previousLabel={"prev"}
               nextLabel={"next"}

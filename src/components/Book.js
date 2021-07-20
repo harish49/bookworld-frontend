@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "react-rater/lib/react-rater.css";
 const Book = ({ book }) => {
-  let rating = 4;
   return (
     <Card className="my-3 p-3 rounded shadow rounded" style={{ height: 450 }}>
       <Link to={`/books/defaultbooks/${book.bookId}`}>
@@ -22,7 +21,7 @@ const Book = ({ book }) => {
         </Link>
         <Card.Text as="div">
           <div className="my-1">
-            {book.rating >= 1 ? (
+            {book.rating / book.reviews >= 1 ? (
               <i
                 className="fa fa-star checked"
                 style={{ color: "#fc9403" }}
