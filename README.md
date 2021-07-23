@@ -1,10 +1,12 @@
-# Getting Started with Create React App
+# BookWorld-Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An e-commerce website where customers can browse, search, add to cart, buy and review the books.Integrated the application with google books API which gives users a real search experience.
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `cd ui`
 
 ### `npm start`
 
@@ -15,3 +17,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 https://github.com/harish49/bookworld-backend
 
+Many Thanks to BradTraversy , stackoverflow and youtube for the UI.
