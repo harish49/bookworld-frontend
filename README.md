@@ -45,7 +45,7 @@ My Orders
 Search bar <br>
 <img width="426" alt="Searchbar" src="https://user-images.githubusercontent.com/43724708/128633793-7991b37d-9ad2-4b67-bf5e-2540dd3135ac.PNG">
 
-Search results( Golang books are placed in homepage)
+Search results( Golang books are displayed in homepage)
 <img width="943" alt="searchresults" src="https://user-images.githubusercontent.com/43724708/128633794-142aa7cb-37b7-4efc-874e-0fc295c96b51.PNG">
 
 Pagination
@@ -54,7 +54,7 @@ Pagination
 Spinner when loading API data
 <img width="948" alt="spinner" src="https://user-images.githubusercontent.com/43724708/128633795-3a0f6539-2f76-480b-9e4c-944769531805.PNG">
 
-Admin options
+Admin options <br>
 <img width="233" alt="AdminScreenoptions" src="https://user-images.githubusercontent.com/43724708/128633797-998db884-a959-4211-9e8d-a6ca38efc276.PNG">
 
 List of users
