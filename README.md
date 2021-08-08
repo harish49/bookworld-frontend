@@ -42,7 +42,7 @@ Order Placed
 My Orders
 <img width="944" alt="MyOrders" src="https://user-images.githubusercontent.com/43724708/128633789-be3b392f-5346-4de2-84b6-fea00ee31877.PNG">
 
-Search bar
+Search bar <br>
 <img width="426" alt="Searchbar" src="https://user-images.githubusercontent.com/43724708/128633793-7991b37d-9ad2-4b67-bf5e-2540dd3135ac.PNG">
 
 Search results( Golang books are placed in homepage)
@@ -53,9 +53,6 @@ Pagination
 
 Spinner when loading API data
 <img width="948" alt="spinner" src="https://user-images.githubusercontent.com/43724708/128633795-3a0f6539-2f76-480b-9e4c-944769531805.PNG">
-
-Sweet alerts
-<img width="960" alt="SweetAlertsreview" src="https://user-images.githubusercontent.com/43724708/128633796-9bca5b82-4b5d-493d-be17-f633f4af1cbe.PNG">
 
 Admin options
 <img width="233" alt="AdminScreenoptions" src="https://user-images.githubusercontent.com/43724708/128633797-998db884-a959-4211-9e8d-a6ca38efc276.PNG">
