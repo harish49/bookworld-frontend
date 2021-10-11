@@ -23,7 +23,7 @@ Home page
 <img width="939" alt="Frontend_homepage" src="https://user-images.githubusercontent.com/43724708/128633785-edea67dc-b66d-44fd-bbdc-6deda3fd5cc8.PNG">
 
 Sign In
-<img width="946" alt="Frontend_signinpage" src="https://user-images.githubusercontent.com/43724708/128633787-3f2430b7-54a3-4a0a-82db-d87458cef86f.PNG">
+<img width="959" alt="SigninPic" src="https://user-images.githubusercontent.com/43724708/136783322-6eb7eab6-a296-4bc1-a408-6d783446b927.PNG">
 
 Book details
 <img width="950" alt="boodetailspage" src="https://user-images.githubusercontent.com/43724708/128633780-1a9565cb-dae3-4f2a-8bc2-417ff50563dd.PNG">
@@ -44,7 +44,7 @@ Order Placed
 <img width="944" alt="OrderPlaced" src="https://user-images.githubusercontent.com/43724708/128633790-dc4054d4-f692-4d98-9952-71655e9381f6.PNG">
 
 My Orders
-<img width="944" alt="MyOrders" src="https://user-images.githubusercontent.com/43724708/128633789-be3b392f-5346-4de2-84b6-fea00ee31877.PNG">
+<img width="960" alt="MyOrders" src="https://user-images.githubusercontent.com/43724708/136783379-4e80101f-8882-4a28-a177-8930a82fe981.PNG">
 
 Search bar <br>
 <img width="426" alt="Searchbar" src="https://user-images.githubusercontent.com/43724708/128633793-7991b37d-9ad2-4b67-bf5e-2540dd3135ac.PNG">
