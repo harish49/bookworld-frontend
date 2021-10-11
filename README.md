@@ -23,6 +23,7 @@ Home page
 <img width="939" alt="Frontend_homepage" src="https://user-images.githubusercontent.com/43724708/128633785-edea67dc-b66d-44fd-bbdc-6deda3fd5cc8.PNG">
 
 Sign In
+
 <img width="959" alt="SigninPic" src="https://user-images.githubusercontent.com/43724708/136783322-6eb7eab6-a296-4bc1-a408-6d783446b927.PNG">
 
 Book details
@@ -32,6 +33,7 @@ Book description
 <img width="960" alt="bookdescription_modal" src="https://user-images.githubusercontent.com/43724708/128633782-42f34047-89f1-415e-94c8-3b24f300b934.PNG">
 
 Book reviews
+
 <img width="859" alt="BookReviews" src="https://user-images.githubusercontent.com/43724708/128633783-5b35d343-f9e7-4683-bb4f-9f7406815334.PNG">
 
 User cart
@@ -66,4 +68,6 @@ List of users
 
 
 
-Many Thanks to BradTraversy , stackoverflow and youtube for the UI.
+Many Thanks to BradTraversy , stackoverflow , youtube for the UI.
+
+Copyright © 2021 Harish Vemula.
