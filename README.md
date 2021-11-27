@@ -3,6 +3,7 @@
 An e-commerce website where customers can browse, search, add to cart, buy and review the books.Integrated the application with google books API which gives users a real search experience.
 
 How do users get a real search experience with this application ? <br>
+
 When a user searches for a book in UI, the search keyword hits the backend API's. The backend makes a call to Google books API to fetch real books data which best matches the key word. This response is sent back to UI.
 
 ## Available Scripts
