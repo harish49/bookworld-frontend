@@ -3,8 +3,7 @@
 An e-commerce website where customers can browse, search, add to cart, buy and review the books.Integrated the application with google books API which gives users a real search experience.
 
 ### Search functionality <br>
-When a user searches for a book in UI, the search keyword hits the backend API's. The backend makes a call to Google books API to fetch real books data which best matches the provided key word. This response is sent back to UI.
-
+When a user searches for a book in UI, the search request hits the backend API's. The backend makes a call to Google books, fetches the data and sends the google books API response to user. This way, the search results are very much accurate, predicitve and dynamic since indirectly the application is doing a google search in the backend. That is how I leveraged google books API to achieve real search experience in application.
 
 
 ## Available Scripts
